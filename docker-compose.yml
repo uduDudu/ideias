@@ -1,44 +1,51 @@
 version: "3"
 services:
-  db:
-    image: postgres:11.3-alpine
+  postgres:
+    image: postgres:12.3
+    ports:
+      - "32532:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
     volumes:
       - db_data:/var/lib/postgresql/data
-  backend:
-    build:
-      context: ./backend
-    depends_on:
-      - db
-    env_file: ./backend/.env
+  graphql-engine:
+    image: hasura/graphql-engine:v1.2.2
     ports:
-      - 32580:8080
-    volumes:
-      - ./backend:/backend-app
+    - "32533:8080"
+    depends_on:
+    - "postgres"
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      ## uncomment next line to set an admin secret
+      HASURA_GRAPHQL_ADMIN_SECRET: hasura123
+  # backend:
+  #   build:
+  #     context: ./backend
+  #   depends_on:
+  #     - db
+  #   env_file: ./backend/.env
+  #   ports:
+  #     - 32580:8080
+  #   volumes:
+  #     - ./backend:/backend-app
   authentication:
     build:
       context: ./authentication
     command: yarn start
     env_file: ./authentication/.env
     depends_on:
-      - db
+    - "postgres"
+    - "graphql-engine"
     ports:
-      - "32530:8080"
+      - "32534:8080"
     volumes:
       - ./authentication:/authentication-app
       - ./authentication/package.json:/authentication-app/package.json
       - ./authentication/yarn.lock:/authentication-app/yarn.lock
-  frontend:
-    build:
-      context: ./frontend
-    command: yarn dev
-    depends_on:
-      - backend
-      - authentication
-    volumes:
-      - ./frontend:/frontend-app
-      - ./frontend/package.json:/frontend-app/package.json
-      - ./frontend/yarn.lock:/frontend-app/yarn.lock
-    ports:
-      - "32500:3000"
 volumes:
   db_data:
