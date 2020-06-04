@@ -1,13 +1,3 @@
-# Tutorial Readme
-
-```
-openssl genrsa -out private.pem 2048
-openssl rsa -in private.pem -pubout > public.pem
-awk -v ORS='\n' '1' public.pem
-# Add the above output into the HASURA_GRAPHQL_JWT_SECRET key present in the .env file of our backend application.
-```
-
-
 # Authentication with JWT, Hasura claims and multiple roles
 
 This is a sample auth JWT service for authenticating requests to the Hasura GraphQL Engine. This also exposes login and signup endpoints. Note that this repository can also be used in webhook mode in using the `/webhook` endpoint. The specifics of this repository is that it maps a `user_role` table to generate `x-hasura-allowed-roles` in the JWT claim so multiple roles can work with the Hasura Grapqh Engine as a backend of the application.

@@ -1,4 +1,4 @@
-FROM hasura/graphql-engine:v1.0.0
+FROM hasura/graphql-engine:v1.2.2
 RUN mkdir /backend-app
 WORKDIR /backend-app
 COPY . /backend-app/
