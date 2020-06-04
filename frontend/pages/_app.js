@@ -3,7 +3,7 @@ import NextApp from "next/app";
 import { ThemeProvider, CSSReset, theme } from "@chakra-ui/core";
 import { ClientContext } from "graphql-hooks";
 
-import withGraphQLClient from "../src/lib/with-graphql-client";
+import withGraphQLClient from "../lib/with-graphql-client";
 
 class App extends NextApp {
   render() {
