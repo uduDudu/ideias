@@ -26,9 +26,13 @@ yarn dev
 
 http://localhost:3000
 
+Try to signup! If everything is working you should see a new user!
+
 ## Access Hasura Console
 
 ```bash
 cd hasura
 hasura console
 ```
+
+Profit!
