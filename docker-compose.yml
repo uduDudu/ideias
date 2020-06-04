@@ -11,41 +11,16 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
   graphql-engine:
-    image: hasura/graphql-engine:v1.2.2
+    image: hasura/graphql-engine:v1.2.2.cli-migrations-v2
     ports:
-    - "32533:8080"
+      - "32533:8080"
     depends_on:
-    - "postgres"
+      - "postgres"
     restart: always
-    environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
-      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      ## uncomment next line to set an admin secret
-      HASURA_GRAPHQL_ADMIN_SECRET: hasura123
-  # backend:
-  #   build:
-  #     context: ./backend
-  #   depends_on:
-  #     - db
-  #   env_file: ./backend/.env
-  #   ports:
-  #     - 32580:8080
-  #   volumes:
-  #     - ./backend:/backend-app
-  authentication:
-    build:
-      context: ./authentication
-    command: yarn start
-    env_file: ./authentication/.env
-    depends_on:
-    - "postgres"
-    - "graphql-engine"
-    ports:
-      - "32534:8080"
+    env_file:
+      - ./hasura/.env
     volumes:
-      - ./authentication:/authentication-app
-      - ./authentication/package.json:/authentication-app/package.json
-      - ./authentication/yarn.lock:/authentication-app/yarn.lock
+      - ./hasura/migrations:/hasura-migrations
+      - ./hasura/metadata:/hasura-metadata
 volumes:
   db_data:
