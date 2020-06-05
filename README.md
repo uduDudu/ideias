@@ -3,6 +3,8 @@
 ## Requirements
 
 1. Install Docker
+1. Install node
+1. Install yarn `npm install -g yarn`
 1. Install hasura cli: `npm install -g hasura-cli`
 
 ## Run application
