@@ -1,5 +1,20 @@
 - table:
     schema: public
+    name: comments
+- table:
+    schema: public
+    name: difficulties
+- table:
+    schema: public
+    name: idea_comment
+- table:
+    schema: public
+    name: idea_difficulty
+- table:
+    schema: public
+    name: ideas
+- table:
+    schema: public
     name: role
 - table:
     schema: public
@@ -32,6 +47,12 @@
       - updated_at
       - username
       filter: {}
+- table:
+    schema: public
+    name: user_comment
+- table:
+    schema: public
+    name: user_idea
 - table:
     schema: public
     name: user_passport
