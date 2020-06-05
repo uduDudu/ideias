@@ -20,7 +20,7 @@ cp default.env .env
 yarn
 yarn dev
 
-# go to a new terminal
+# abra um novo terminal
 cd frontend
 yarn
 yarn dev
@@ -30,7 +30,7 @@ yarn dev
 
 http://localhost:3000
 
-Try to signup! If everything is working you should see a new user!
+Tente se registrar! Se tudo estiver funcionando você deve ver um novo usuário!
 
 ## Accesso ao Console do Hasura
 
