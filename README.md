@@ -2,6 +2,8 @@
 
 Vamos compartilhar boas ideias de código, apps e exercícios? Assim as pessoas que estão aprendendo podem praticar criando, desenvolvendo e colaborando com exercicios e ideias mais fáceis; os mais experientes podem se juntar à outros para desenvolver ideias mais complexas! SEMPRE PRATICANDO!
 
+### [English Readme Translation](README.en.md)
+
 ## Requisitos
 
 1. Install Docker
