@@ -13,12 +13,23 @@
           schema: public
           name: user_role
   select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+      - created_at
+      - display_name
+      - id
+      - username
+      filter: {}
+      limit: 30
   - role: user
     permission:
       columns:
       - created_at
       - display_name
       - id
+      - locked_until
+      - updated_at
       - username
       filter: {}
 - table:
