@@ -1,0 +1,1 @@
+alter table "public"."idea" drop constraint "idea_user_id_fkey";

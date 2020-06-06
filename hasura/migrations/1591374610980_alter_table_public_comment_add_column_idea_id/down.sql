@@ -1,0 +1,1 @@
+ALTER TABLE "public"."comment" DROP COLUMN "idea_id";
