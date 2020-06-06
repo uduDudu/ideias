@@ -1,6 +1,15 @@
 - table:
     schema: public
+    name: comment
+- table:
+    schema: public
+    name: idea
+- table:
+    schema: public
     name: role
+- table:
+    schema: public
+    name: solution
 - table:
     schema: public
     name: user
