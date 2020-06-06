@@ -1,14 +1,14 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 CREATE TABLE "public"."idea"(
-  "id" uuid NOT NULL DEFAULT gen_random_uuid(),
-  "tag" integer NOT NULL,
+  "id" SERIAL NOT NULL,
+  "user_id" uuid NOT NULL,
   "title" text NOT NULL,
   "description" text NOT NULL,
+  "difficulty" int2 NOT NULL,
   "created_at" timestamptz NOT NULL DEFAULT now(),
   "updated_at" timestamptz NOT NULL DEFAULT now(),
-  "repository" text NOT NULL,
   PRIMARY KEY ("id"),
-  UNIQUE ("tag"),
+  foreign key ("user_id") references "public"."user"("id") on update restrict on delete restrict
 );
 CREATE OR REPLACE FUNCTION "public"."set_current_timestamp_updated_at"() RETURNS TRIGGER AS $$ DECLARE _new record;
 BEGIN _new := NEW;

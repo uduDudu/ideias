@@ -1,1 +1,0 @@
-alter table "public"."comment" drop constraint "comment_idea_id_fkey";

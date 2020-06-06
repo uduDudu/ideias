@@ -1,1 +1,0 @@
-ALTER TABLE "public"."idea" DROP COLUMN "repository" CASCADE;
