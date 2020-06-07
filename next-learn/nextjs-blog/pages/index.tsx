@@ -1,13 +1,18 @@
 import Head from "next/head";
 import Link from "next/link";
 
-import { getSortedPostsData } from "../lib/posts";
+import { getSortedPostsData, PostData } from "../lib/posts";
 
 import Date from "../components/date";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
+import { GetStaticProps } from "next";
 
-export default function Home({ allPostsData }) {
+interface Props {
+  allPostsData: PostData[];
+}
+
+const Home: React.FC<Props> = ({ allPostsData }) => {
   // EFFECTIVE CLIENT SIDE RENDERER
   // const { data, error } = useSWR('/api/user', fetch)
 
@@ -42,22 +47,24 @@ export default function Home({ allPostsData }) {
       </section>
     </Layout>
   );
-}
+};
+
+export default Home;
 
 // BUILD TIME - (AHEAD OF USER REQUEST) - CAN'T READ REQUEST PARAMS
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const allPostsData = getSortedPostsData();
   return {
     props: {
       allPostsData,
     },
   };
-}
+};
 
 // XOR: REQUEST TIME Server Side Rendering!
 // the result cannot be cached by a CDN without extra configuration.
 // extra configuration might solve caching?
-// export async function getServerSideProps(context) {
+// export const getServerSideProps: GetServerSideProps = async (context) => {
 //   return {
 //     props: {
 //       // props for your component
