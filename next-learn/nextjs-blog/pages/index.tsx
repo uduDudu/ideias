@@ -6,7 +6,7 @@ import { getSortedPostsData, PostData } from "../lib/posts";
 import Date from "../components/date";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 
 interface Props {
   allPostsData: PostData[];
@@ -52,7 +52,19 @@ const Home: React.FC<Props> = ({ allPostsData }) => {
 export default Home;
 
 // BUILD TIME - (AHEAD OF USER REQUEST) - CAN'T READ REQUEST PARAMS
-export const getStaticProps: GetStaticProps = async () => {
+// export const getStaticProps: GetStaticProps = async () => {
+//   const allPostsData = getSortedPostsData();
+//   return {
+//     props: {
+//       allPostsData,
+//     },
+//   };
+// };
+
+// XOR: REQUEST TIME Server Side Rendering!
+// the result cannot be cached by a CDN without extra configuration.
+// extra configuration might solve caching?
+export const getServerSideProps: GetServerSideProps = async (_context) => {
   const allPostsData = getSortedPostsData();
   return {
     props: {
@@ -60,14 +72,3 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   };
 };
-
-// XOR: REQUEST TIME Server Side Rendering!
-// the result cannot be cached by a CDN without extra configuration.
-// extra configuration might solve caching?
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   return {
-//     props: {
-//       // props for your component
-//     },
-//   };
-// }
