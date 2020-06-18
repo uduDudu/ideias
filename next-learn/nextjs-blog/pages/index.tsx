@@ -1,18 +1,42 @@
 import Head from "next/head";
 import Link from "next/link";
+import { GetServerSideProps } from "next";
+import { gql } from "apollo-boost";
 
 import { getSortedPostsData, PostData } from "../lib/posts";
 
 import Date from "../components/date";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
-import { GetServerSideProps } from "next";
+import { useQuery } from "@apollo/react-hooks";
 
 interface Props {
   allPostsData: PostData[];
 }
 
+const EXCHANGE_RATES = gql`
+  {
+    rates(currency: "USD") {
+      currency
+      rate
+    }
+  }
+`;
+
 const Home: React.FC<Props> = ({ allPostsData }) => {
+  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  const rates = data.rates.map(({ currency, rate }) => (
+    <div key={currency}>
+      <p>
+        {currency}: {rate}
+      </p>
+    </div>
+  ));
+
   // EFFECTIVE CLIENT SIDE RENDERER
   // const { data, error } = useSWR('/api/user', fetch)
 
@@ -28,6 +52,8 @@ const Home: React.FC<Props> = ({ allPostsData }) => {
           <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
         </p>
       </section>
+
+      <section>{rates}</section>
 
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
