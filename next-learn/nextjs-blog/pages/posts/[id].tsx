@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps, GetServerSideProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 
 import { getAllPostIds, getPostData, FullPostData } from "../../lib/posts";
@@ -30,24 +30,15 @@ const Post: React.FC<Props> = ({ postData }) => {
 
 export default Post;
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const paths = getAllPostIds();
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// };
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = getAllPostIds();
+  return {
+    paths,
+    fallback: false,
+  };
+};
 
-// export const getStaticProps: GetStaticProps = async ({ params }) => {
-//   const postData = await getPostData(params.id as string);
-//   return {
-//     props: {
-//       postData,
-//     },
-//   };
-// };
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postData = await getPostData(params.id as string);
   return {
     props: {
@@ -55,3 +46,12 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
   };
 };
+
+// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+//   const postData = await getPostData(params.id as string);
+//   return {
+//     props: {
+//       postData,
+//     },
+//   };
+// };

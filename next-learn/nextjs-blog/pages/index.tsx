@@ -2,13 +2,14 @@ import Head from "next/head";
 import Link from "next/link";
 import { GetServerSideProps } from "next";
 import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
 
 import { getSortedPostsData, PostData } from "../lib/posts";
+import { initializeApollo } from "../lib/apolloClient";
 
 import Date from "../components/date";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
-import { useQuery } from "@apollo/react-hooks";
 
 interface Props {
   allPostsData: PostData[];
@@ -29,16 +30,13 @@ const Home: React.FC<Props> = ({ allPostsData }) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  const rates = data.rates.map(({ currency, rate }) => (
+  const rates = data.rates.slice(0, 10).map(({ currency, rate }) => (
     <div key={currency}>
       <p>
         {currency}: {rate}
       </p>
     </div>
   ));
-
-  // EFFECTIVE CLIENT SIDE RENDERER
-  // const { data, error } = useSWR('/api/user', fetch)
 
   return (
     <Layout home>
@@ -52,8 +50,6 @@ const Home: React.FC<Props> = ({ allPostsData }) => {
           <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
         </p>
       </section>
-
-      <section>{rates}</section>
 
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
@@ -71,29 +67,24 @@ const Home: React.FC<Props> = ({ allPostsData }) => {
           ))}
         </ul>
       </section>
+
+      <section>{rates}</section>
     </Layout>
   );
 };
 
 export default Home;
 
-// BUILD TIME - (AHEAD OF USER REQUEST) - CAN'T READ REQUEST PARAMS
-// export const getStaticProps: GetStaticProps = async () => {
-//   const allPostsData = getSortedPostsData();
-//   return {
-//     props: {
-//       allPostsData,
-//     },
-//   };
-// };
-
-// XOR: REQUEST TIME Server Side Rendering!
-// the result cannot be cached by a CDN without extra configuration.
-// extra configuration might solve caching?
 export const getServerSideProps: GetServerSideProps = async (_context) => {
+  const apolloClient = initializeApollo();
+  await apolloClient.query({
+    query: EXCHANGE_RATES,
+  });
+
   const allPostsData = getSortedPostsData();
   return {
     props: {
+      initialApolloState: apolloClient.cache.extract(),
       allPostsData,
     },
   };

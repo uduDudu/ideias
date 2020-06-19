@@ -1,12 +1,13 @@
 import { AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/react-hooks";
 
+import { useApollo } from "../lib/apolloClient";
 import "../styles/global.css";
-import { gqlClient } from "../lib/withGraphqlClient";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
+  const apolloClient = useApollo(pageProps.initialApolloState);
   return (
-    <ApolloProvider client={gqlClient}>
+    <ApolloProvider client={apolloClient}>
       <Component {...pageProps} />;
     </ApolloProvider>
   );
