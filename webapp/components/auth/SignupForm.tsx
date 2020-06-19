@@ -75,7 +75,7 @@ const SignUpForm = ({ router }) => {
   return (
     <Box
       w="100%"
-      minH="100vh"
+      minH="70vh"
       p={4}
       d="flex"
       alignItems="center"

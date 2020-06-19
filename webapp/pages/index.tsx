@@ -3,24 +3,26 @@ import { GetServerSideProps } from "next";
 
 import { initializeApollo } from "../lib/apolloClient";
 
-import Layout, { siteTitle } from "../components/Layout";
+import { siteTitle } from "../components/Layout";
 import UsersList, { USERS_QUERY } from "../components/users/UsersList";
+import Header from "../components/_commons/Header";
 
 const Home: React.FC = () => {
   return (
-    <Layout home>
+    <>
       <Head>
         <title>{siteTitle}</title>
       </Head>
+      <Header />
       <UsersList />
-    </Layout>
+    </>
   );
 };
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async (_context) => {
-  const apolloClient = initializeApollo();
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apolloClient = initializeApollo(null, ctx);
   await apolloClient.query({
     query: USERS_QUERY,
   });

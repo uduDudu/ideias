@@ -13,8 +13,8 @@ export const useApollo = (initialState) => {
   return store;
 };
 
-export const initializeApollo = (initialState = null) => {
-  const _apolloClient = apolloClient ?? createApolloClient();
+export const initializeApollo = (initialState = null, ctx = null) => {
+  const _apolloClient = apolloClient ?? createApolloClient(ctx);
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // gets hydrated here
@@ -30,11 +30,11 @@ export const initializeApollo = (initialState = null) => {
   return _apolloClient;
 };
 
-const createApolloClient = () => {
+const createApolloClient = (ctx) => {
   const headers: any = {
-    "X-Hasura-User-Id": parseCookies()["X-Hasura-User-Id"],
+    "X-Hasura-User-Id": parseCookies(ctx)["X-Hasura-User-Id"],
   };
-  const token = parseCookies()["token"];
+  const token = parseCookies(ctx)["token"];
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }

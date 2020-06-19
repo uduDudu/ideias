@@ -11,6 +11,7 @@ import {
 import { setCookie } from "nookies";
 
 import { AUTH_API_URL } from "../../config";
+import Link from "next/link";
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -65,7 +66,7 @@ const LoginForm: React.FC = () => {
   return (
     <Box
       w="100%"
-      minH="100vh"
+      minH="70vh"
       p={4}
       d="flex"
       alignItems="center"
@@ -96,6 +97,13 @@ const LoginForm: React.FC = () => {
         <FormControl>
           <Button onClick={handleSubmit}>Sign In</Button>
         </FormControl>
+        <Box m={8} textAlign="center">
+          <Link href="/signup">
+            <Button type="button" variantColor="green">
+              Signup
+            </Button>
+          </Link>
+        </Box>
       </Box>
     </Box>
   );

@@ -11,7 +11,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     <ThemeProvider theme={theme}>
       <CSSReset />
       <ApolloProvider client={apolloClient}>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </ApolloProvider>
     </ThemeProvider>
   );
