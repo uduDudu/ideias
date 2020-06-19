@@ -3,8 +3,8 @@ import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 
-const name = "Leo Ribeiro";
-export const siteTitle = "Next.js Sample Website";
+const name = "Ideias Pra Todos";
+export const siteTitle = "Ideias Pra Todos";
 
 interface Props {
   home?: boolean;
@@ -14,7 +14,7 @@ const Layout: React.FC<Props> = ({ children, home }) => {
   return (
     <div className={styles.container}>
       <Head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
         <meta
           name="description"
           content="Learn how to build a personal website using Next.js"
@@ -32,7 +32,7 @@ const Layout: React.FC<Props> = ({ children, home }) => {
         {home ? (
           <>
             <img
-              src="/images/jacket-profile.jpg"
+              src="/images/ipt-logo.png"
               className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
               alt={name}
             />
