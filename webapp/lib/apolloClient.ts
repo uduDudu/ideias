@@ -2,6 +2,7 @@ import { ApolloClient } from "apollo-boost";
 import { HttpLink } from "apollo-link-http";
 import { useMemo } from "react";
 import { InMemoryCache } from "apollo-boost"; // change to 'apollo-link-http'?
+import { parseCookies } from "nookies";
 
 import { GQL_API_URL } from "../config";
 
@@ -29,12 +30,24 @@ export const initializeApollo = (initialState = null) => {
   return _apolloClient;
 };
 
-const createApolloClient = () =>
-  new ApolloClient({
+const createApolloClient = () => {
+  const headers: any = {
+    "X-Hasura-User-Id": parseCookies()["X-Hasura-User-Id"],
+  };
+  const token = parseCookies()["token"];
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  console.info("headers", headers);
+
+  return new ApolloClient({
     ssrMode: typeof window === "undefined",
     link: new HttpLink({
       uri: GQL_API_URL,
-      credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
+      headers,
+      // credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
     }),
     cache: new InMemoryCache(),
   });
+};
