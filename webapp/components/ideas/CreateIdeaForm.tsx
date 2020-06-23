@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, FormControl, Input, Flex, FormLabel, Button, Textarea, Select } from "@chakra-ui/core";
-
+import ReactMarkdown from "react-markdown";
 
 
 const CreateIdeaFrom: React.FC = () => {
@@ -34,7 +34,7 @@ const CreateIdeaFrom: React.FC = () => {
                 </FormControl>
                 <FormControl mb={8} d="flex" flexDirection="column">
                     <FormLabel htmlFor="difficulty">Difficulty</FormLabel>
-                  
+
                     <Select placeholder="Select difficulty"
                         type="text"
                         id="difficulty"
@@ -44,8 +44,7 @@ const CreateIdeaFrom: React.FC = () => {
                         <option value="3">3</option>
                     </Select>
                 </FormControl>
-
-
+                <ReactMarkdown source={description} escapeHtml={false} />
             </Box>
         </Flex>
     )

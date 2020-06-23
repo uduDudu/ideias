@@ -21,6 +21,7 @@
     "nookies": "^2.3.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-markdown": "^4.3.1",
     "remark": "^12.0.0",
     "remark-html": "^11.0.2"
   },
